@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { LoadingController } from 'ionic-angular';
+
 import { AndroidDataLocation, FileDownloadService } from '../../app/file-download.service';
 
 @Component({
@@ -8,11 +10,14 @@ import { AndroidDataLocation, FileDownloadService } from '../../app/file-downloa
 export class HomePage {
   private readonly remoteFilePath = 'https://drive.google.com/uc?export=download&id=1j9J3LUAU4qtEwUCy40-ljqoP1SI7vF7E';
 
-  constructor(private fileDownload: FileDownloadService) {
+  constructor(private fileDownload: FileDownloadService, private loader: LoadingController) {
   }
 
   openFile(androidLocation?: AndroidDataLocation) {
-    this.fileDownload.download(this.remoteFilePath, 'example.pdf', androidLocation)
+    const loader = this.loader.create();
+
+    loader.present()
+      .then(() => this.fileDownload.download(this.remoteFilePath, 'example.pdf', androidLocation))
       .then(filePath => {
         console.log('Opening PDF file:', filePath);
         return new Promise((resolve, reject) => {
@@ -20,18 +25,22 @@ export class HomePage {
             {
               url: filePath,
             },
-            function(message) {
+            function (message) {
               console.log('Success: ' + message);
               resolve(message);
             },
-            function(err) {
+            function (err) {
               console.log('Failure: ' + err);
               reject(err);
             }
           );
         });
       })
-      .catch(console.error);
+      .then(() => loader.dismiss())
+      .catch(err => {
+        console.error(err);
+        return loader.dismiss();
+      });
   }
 
   openFromExternalDataDirectory() {
