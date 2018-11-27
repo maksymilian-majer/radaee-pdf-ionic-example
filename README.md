@@ -1,6 +1,6 @@
 # About
 
-This is a project to demonstrate how to use the [RadaeePDF Cordova Plugin] in an Ionic application.
+This is a project to demonstrate how to use the [RadaeePDF Cordova Plugin](https://github.com/gearit/RadaeePDF-Cordova/blob/master/README.md) in an Ionic application.
 
 # Quick Start
 
