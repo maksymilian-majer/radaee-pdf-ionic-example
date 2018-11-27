@@ -7,8 +7,26 @@
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <ion-list hideWhen="ios">
+    <ion-item (click)="openFile()">
+      Data Directory
+      <button ion-button item-end outline>Open</button>
+    </ion-item>
+
+    <ion-item (click)="openFromExternalDataDirectory()">
+      External Data directory
+      <button ion-button item-end outline>Open</button>
+    </ion-item>
+
+    <ion-item (click)="openFromApplicationStorageDirectory()">
+      External Application Storage Directory
+      <button ion-button item-end outline>Open</button>
+    </ion-item>
+  </ion-list>
+  <ion-list hideWhen="android">
+    <ion-item (click)="openFile()">
+      Documents Directory
+      <button ion-button item-end outline>Open</button>
+    </ion-item>
+  </ion-list>
 </ion-content>

@@ -16,6 +16,20 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+
+      RadaeePDFPlugin.activateLicense(
+        {
+          licenseType: 0, //0: for standard license, 1: for professional license, 2: for premium license
+          company: "", //the company name you entered during license activation
+          email: "", //the email you entered during license activation
+          key: "" //you license activation key
+        },
+        function(message) { // Callback for successful opening.
+          console.log("Success: " + message);
+        },
+        function(err){ // Callback in case of error.
+          console.log("Failure: " + err);
+        });
     });
   }
 }
