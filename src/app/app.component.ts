@@ -17,6 +17,10 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
 
+      if (!platform.is('cordova')) {
+        return;
+      }
+
       RadaeePDFPlugin.activateLicense(
         {
           licenseType: 0, //0: for standard license, 1: for professional license, 2: for premium license
