@@ -25,9 +25,10 @@ export class MyApp {
       if (!platform.is("cordova")) {
         return;
       }
-    });
 
-    this.setPdfReaderLicense().then(() => this.configurePdfReader());
+      const handler = () => this.configurePdfReader()
+      this.setPdfReaderLicense().then(handler).catch(handler);
+    });
   }
 
   async setPdfReaderLicense(): Promise<any> {
@@ -39,20 +40,32 @@ export class MyApp {
           email: "", //the email you entered during license activation
           key: "" //you license activation key
         },
-        resolve,
-        reject
+        msg => {
+          console.log('Success:', msg);
+          resolve(msg);
+        },
+        err => {
+          console.error('Error:', err);
+          reject(err);
+        }
       );
     });
   }
 
   async configurePdfReader(): Promise<any> {
     return new Promise((resolve, reject) => {
-      RadaeePDFPlugin.setThumbnailBGColor(
+      RadaeePDFPlugin.setTitleBGColor(
         {
-          color: 0xFFFF0000
+          color: 0xFFFFFFFF
         },
-        resolve,
-        reject
+        msg => {
+          console.log('Success:', msg);
+          resolve(msg);
+        },
+        err => {
+          console.error('Error:', err);
+          reject(err);
+        }
       );
     });
   }
