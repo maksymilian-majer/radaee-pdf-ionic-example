@@ -26,7 +26,7 @@ export class MyApp {
         return;
       }
 
-      const handler = () => this.configurePdfReader()
+      const handler = () => this.setToolbarBackgroundColor().then(() => this.setIconsBackgroundColor());
       this.setPdfReaderLicense().then(handler).catch(handler);
     });
   }
@@ -52,9 +52,27 @@ export class MyApp {
     });
   }
 
-  async configurePdfReader(): Promise<any> {
+  async setToolbarBackgroundColor(): Promise<any> {
     return new Promise((resolve, reject) => {
       RadaeePDFPlugin.setTitleBGColor(
+        {
+          color: 0xFFFFFFFF
+        },
+        msg => {
+          console.log('Success:', msg);
+          resolve(msg);
+        },
+        err => {
+          console.error('Error:', err);
+          reject(err);
+        }
+      );
+    });
+  }
+  
+  async setIconsBackgroundColor(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      RadaeePDFPlugin.setIconsBGColor(
         {
           color: 0xFFFFFFFF
         },
